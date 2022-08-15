@@ -1,0 +1,28 @@
+/*
+============================================
+; Title: Assignment #.# global.css
+; Author: Shay McKee
+; Date: 08/14/2022
+; Description: Global CSS file for all WEB 231 exercises and projects
+;============================================
+*/
+
+/* importing Oswald Font from Google */
+@import url('https://fonts.googleapis.com/css2?family=Limelight&family=Oswald:wght@300;400;500;700&family=Poiret+One&display=swap');
+
+/* Declaring site colors globally for ease of changing later */
+:root {
+	--primaryColor: #3c275a;
+	--accentColor: #d6a800;
+	--secondaryColor: #453674;
+}
+
+/* Style for main container of content in body  */ 
+#container {
+	padding: 10px;
+}
+
+/* Making the font the same over the whole body  */ 
+body {
+	font-family: Oswald, Verdana, arial, sans-serif;
+}
