@@ -1,0 +1,115 @@
+<!--
+============================================================
+; Title: McKee-palindrome.html
+; Author: Shay McKee
+; Date: 8/20/2022
+; Description: Palindrome Application 
+; Source: https://sebhastian.com/palindrome-javascript/
+https://www.freecodecamp.org/news/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7/
+============================================================    
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../site.css">
+    <link rel="stylesheet" href="../theme.css">
+    <link rel="stylesheet" href="../global.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+
+    <title>WEB-330 Enterprise JavaScript II</title>
+</head>
+<body>
+    <h1 class="app-header">
+        Welcome to the Palindrome App!
+    </h1>
+        <br />
+<!-- First Card Div -->
+    <div class="card-title-two"><h2>Palindrome Checker</h2>
+        <div id="form-field">
+            <p>
+                <label for="txtPhrase">Phrase value</label>
+                <input id="txtPhrase" type="text">
+            </p>
+                <input type="button" value="Check Phrase" id="btnCheckPhrase" />
+        </div>
+    </div>
+        <br />
+    <a id="returnBtn" href="../index.html">Return</a>
+        <br />
+        <br />
+        <br />
+
+<!-- Second Card Div -->
+    <div class="card-title-two">
+        <h2>Palindrome Results</h2>
+            <p id="assign-results-header"></p>
+                <div id="assign-results-text">
+
+                </div>
+    </div>
+   
+<script>
+// Function to get and return Date
+    function getTodaysDate() {
+        return new Date().toLocaleDateString('en-us');
+    }
+
+// Function to get and return length
+    function getLength(str) {
+        return str.length;
+    }
+
+// function to split, reverse and join the string 
+    function reverse(str) {
+      return str.toLowerCase().split('').reverse().join('');
+    }
+
+// function for Palindrome
+    function isPalindrome(str) {
+        if (reverse(str) === str) {
+            return true;
+        }
+        else return false;
+    }
+
+//  onClick event to capture the value 
+    document.getElementById("btnCheckPhrase").onclick = function() {
+        let txtPhrase = document.getElementById("txtPhrase").value.toLowerCase();
+        let assignResults = document.getElementById("assign-results");
+        let today = getTodaysDate();
+        let len = getLength(txtPhrase);
+        let reversedPhrase = reverse(txtPhrase);
+
+// console log to check things are working
+    console.log(today);
+    console.log(len);
+    console.log(reversedPhrase);
+    console.log(txtPhrase);
+
+// header variable and string build
+        let header = `
+        Date: ${today}<br />
+        Original Phrase: ${txtPhrase}<br />
+        Reversed Phrase: ${reversedPhrase}<br />
+        Phrase Length: ${len}
+        `
+// binding header variable to assign-results-header div
+        document.getElementById("assign-results-header").innerHTML = header;
+        let palinResult = isPalindrome(txtPhrase);
+        
+// if statement comparing palindrome results
+        if (palinResult === true) {
+            document.getElementById("assign-results-text").innerHTML = txtPhrase + " <b><u>is</b></u> a Palindrome!"
+        }
+        else {
+            document.getElementById("assign-results-text").innerHTML =  txtPhrase + " <b><u>is not</b></u> a Palindrome!"
+        }
+    };
+    </script>
+</body>
+</html>
