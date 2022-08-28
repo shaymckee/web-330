@@ -1,7 +1,7 @@
 /*
 =========================================
 ; Title: restaurant.css
-; Author: Andrew Britt
+; Author: Professor Krasso
 ; Modified by: Shay McKee
 ; Date: 08/27/22
 ; Description: Restaurant CSS file for week-3 assignment
@@ -15,7 +15,6 @@
     grid-gap: 10px;
     grid-template-columns: auto auto;
 }
-
 #btnOrder {
     background-color: #4F3674;
     color: #fff;
