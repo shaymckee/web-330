@@ -1,0 +1,38 @@
+/** 
+    Title: shockley-bobs-auto-repair.css
+    Author: Shay McKee
+    Date:9/11/2021
+    Description: Styling for the Bob's Auto Repair application
+*/
+
+/* 
+    Styling for cart-message
+*/
+#cart-message {
+    float: right;
+    color: #df546a;
+    font-size: 12px;
+    padding-right: 100px;
+    letter-spacing: 2px;
+}
+
+/* 
+    Styling for cart icon 
+*/
+#cartIcon {
+    margin: 0 0;
+    padding-left: 290px;
+    color: var(--card-title-color);
+    font-size: 28px;
+}
+
+/* 
+    Icon's cursor changes to pointer on hover
+*/
+i:hover {
+    cursor: pointer;
+}
+
+cart-component {
+    font-size: 20px;
+}
