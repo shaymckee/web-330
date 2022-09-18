@@ -1,0 +1,35 @@
+/** 
+    Title. mckee-future-value.css
+    Author: Shay McKee
+    Date:9/17/2022
+    Description: Styling for the Future Value Application
+*/
+
+/* 
+    Styling for danger text.
+*/
+.danger {
+    float: right;
+    color: #df546a;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* 
+    Styling for danger text.
+*/
+.danger-right {
+    float: right;
+    color: #df546a;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-align: right;
+}
+
+/* 
+    Styling for form labels. 
+*/
+.form-label {
+    display: inline-block;
+    padding-top: 1rem;
+}
