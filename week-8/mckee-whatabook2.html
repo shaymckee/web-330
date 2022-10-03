@@ -1,0 +1,160 @@
+!--
+    Title: mckee-whatabook2.html
+    Author: Shay McKee
+    Date: 10/2/2022
+    Description: What-A-Book HTML Part 2
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Header with links to the course Google fonts and stylesheets. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WEB 330 - Enterprise Javascript II</title>
+    
+    <link rel="stylesheet" href="../theme.css">
+    <link rel="stylesheet" href="../site.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body class="light-theme">
+    <div id="container">
+
+        <!-- App title -->
+        <div class="app-header">Welcome to the WhatABook, Part 1 App!</div>
+        <div class="assign-content">
+
+            <!-- Book Listing card -->
+            <div class="card">
+                <div class="card-title">Book Listing</div>
+                <div class="card-content" id="bookList"></div>  
+            </div>
+
+            <!-- Link to homepage -->
+            <a class="return-home" href="../index.html">Return</a>
+
+            <!-- Selected Book card -->
+            <div class="card">
+                <div class="card-title">Selected Book</div>
+                <div class="card-content" id="selectedBook"></div>
+            </div>
+        </div>
+    </div>
+    <!--JavaScript section -->
+    <script type="module">
+        // Imports the HttpClient class
+        import { HttpClient } from "./http-client.js";
+        // Creates an object that inherits the HttpClient properties
+        let http = new HttpClient();
+        // ISBN array
+        const isbns = [
+            "0345339681",
+            "0261103571",
+            "9780593099322",
+            "9780261102361",
+            "9780261102378",
+            "9780590302715",
+            "9780316769532",
+            "9780743273565",
+            "9780590405959",
+        ];
+        // Creates Params object
+        const params = {
+            "bibkeys": `ISBN:${isbns.join(",")}`,
+            "format": "json",
+            "jscmd": "details",
+        };
+        // HTTP functions that get the book table from the link and display it in the table in the bookList div
+        http
+            .get("https://openlibrary.org/api/books", params)
+            .then((res) => {
+                console.log(res);
+                document.getElementById("bookList").innerHTML = buildHtmlString(res, "table");
+                addIsbnClickEvents();
+            })
+            .catch((e) => {
+            console.log(e);
+            });
+        // Function that creates book objects
+        function getBook(e) {
+            e.preventDefault();
+            let self = this;
+            let isbn = self.innerText;
+            const params = {
+                "bibkeys": `ISBN:${isbn}`,
+                "format": "json",
+                "jscmd": "details",
+            };
+            http
+            .get("https://openlibrary.org/api/books", params)
+            .then((res) => {
+                console.log(res);
+                document.getElementById("selectedBook").innerHTML = buildHtmlString(res, "ul");
+            })
+            .catch((e) => {
+            console.log(e);
+            });
+        }
+        // Function to build the table and unordered list
+        function buildHtmlString(res, format) {
+            let tableString = `<table id="bookTable"><tr>
+                <th>ISBN</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Pages</th>
+                <th>Authors</th>
+                </tr>
+                <tbody>`;
+            let ulString = "";
+            for (let key in res) {
+                ulString += `<ul style="list-style:none;">`;
+                if (res.hasOwnProperty(key)) {
+                    let authors = [];
+                    if (res[key].details.authors) {
+                        authors = res[key].details.authors.map(function(author) {
+                            return author.name;
+                        })
+                    }
+                    let book = {
+                        isbn: res[key].details.isbn_13 ? res[key].details.isbn_13 : res[key].details.isbn_10,
+                        title: res[key].details.title,
+                        description: res[key].details.subtitle ? res[key].details.subtitle : "N/A",
+                        pages: res[key].details.number_of_pages ? res[key].details.number_of_pages : "N/A",
+                        authors: authors.join(","),
+                    }
+                    ulString += `<li><b>ISBN:</b> ${book.isbn}</li>
+                        <li><b>Title:</b> ${book.title}</li>
+                        <li><b>Description:</b> ${book.description}</li>
+                        <li><b>Pages:</b> ${book.pages}</li>
+                        <li><b>Authors:</b> ${book.authors}</li>`;
+                    tableString += `<tr>
+                        <td><a href="#" class="isbn-link">${book.isbn}</a></td>
+                        <td>${book.title}</td>
+                        <td>${book.description}</td>
+                        <td>${book.pages}</td>
+                        <td>${book.authors}</td>
+                        </tr>`;
+                }
+            }
+            ulString += `</ul>`;
+            tableString += `</tbody></table>`
+            if (format === "table") {
+                return tableString;
+            } else {
+                return ulString;
+            }
+        }
+        function addIsbnClickEvents() {
+            let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
+            for (let index = 0; index < viewButtons.length; index++) {
+                viewButtons[index].addEventListener('click', getBook);
+            }
+        }
+
+    </script>
+</body>
+</html>
